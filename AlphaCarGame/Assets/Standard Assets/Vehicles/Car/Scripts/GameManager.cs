@@ -1,41 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GameManager : MonoBehaviour {
-
-	public CarPackage[] players;
-
-	void Start() {
-		SetPlayers (1);
-	}
-
-	void Update() {
-		if (Input.GetKeyDown ("1")) {
-			SetPlayers (1);
-		} else if (Input.GetKeyDown ("2")) {
-			SetPlayers (2);
-		} else if (Input.GetKeyDown ("3")) {
-			SetPlayers (3);
-		} else if (Input.GetKeyDown ("4")) {
-			SetPlayers (4);
-		}
-	}
-
-	void SetPlayers(int numPlayers) {
-		if (numPlayers != currentPlayers) {
-			for (int i = 0; i < players.Length; i++) {
-				if (i <= numPlayers - 1) {
-					players [i].Enable ();
-					players [i].AdjustCamera (i + 1, numPlayers);
-				} else {
-					players [i].Disable ();
-				}
-			}
-			currentPlayers = numPlayers;
-		}
-	}
-}
-
 [System.Serializable]
 public class CarPackage {
 	public string name;
@@ -88,3 +53,35 @@ public class CarPackage {
 		}
 	}
 }
+
+public class GameManager : MonoBehaviour {
+
+	public CarPackage[] players;
+	private int currentPlayers = 1;
+	
+	void Start() {
+		SetPlayers (1);
+	}
+	
+	void Update() {
+		for(int p = 1; p < 5; p++){
+			if(Input.GetKeyDown(p.ToString()){
+				SetPlayers(p);
+			}
+		}
+	}
+
+	void SetPlayers(int numPlayers) {
+		if (numPlayers != currentPlayers) {
+			for (int i = 0; i < players.Length; i++) {
+				if (i < numPlayers) {
+					players [i].Enable ();
+					players [i].AdjustCamera (i + 1, numPlayers);
+				} else 	players [i].Disable ();
+			}
+			currentPlayers = numPlayers;
+		}
+	}
+}
+
+
