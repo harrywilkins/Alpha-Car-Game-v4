@@ -4,14 +4,6 @@ using System.Collections;
 public class GameManager : MonoBehaviour {
 
 	public CarPackage[] players;
-	public GameObject tagCapsule;
-
-	int currentPlayers;
-	[HideInInspector]
-	public bool tagEnabled;
-	GameObject tagCapsuleClone;
-	[HideInInspector]
-	public int taggedPlayer;
 
 	void Start() {
 		SetPlayers (1);
@@ -27,17 +19,6 @@ public class GameManager : MonoBehaviour {
 		} else if (Input.GetKeyDown ("4")) {
 			SetPlayers (4);
 		}
-
-		if (Input.GetKeyDown ("9")) {
-			if (!tagEnabled) {
-				tagEnabled = true;
-				taggedPlayer = Random.Range (0, currentPlayers);
-				TagPlayer (taggedPlayer);
-			} else {
-				tagEnabled = false;
-				Destroy (tagCapsuleClone);
-			}
-		}
 	}
 
 	void SetPlayers(int numPlayers) {
@@ -52,17 +33,6 @@ public class GameManager : MonoBehaviour {
 			}
 			currentPlayers = numPlayers;
 		}
-	}
-
-	public void TagPlayer(int player) {
-		if (tagCapsuleClone != null) {
-			Destroy (tagCapsuleClone);
-		}
-		taggedPlayer = player;
-		Transform playerCar = players [taggedPlayer].car.transform;
-		tagCapsuleClone = (GameObject)Instantiate (tagCapsule, Vector3.zero, playerCar.rotation);
-		tagCapsuleClone.transform.parent = playerCar;
-		tagCapsuleClone.transform.localPosition = new Vector3 (0f, 1.5f, -0.729f);
 	}
 }
 
